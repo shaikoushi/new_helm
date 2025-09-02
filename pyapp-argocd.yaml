@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pyapp
+  namespace: argo-cd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/shaikoushi/new_helm.git
+    targetRevision: main
+    path: pyapp
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pyapp
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
